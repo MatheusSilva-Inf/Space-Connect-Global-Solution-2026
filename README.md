@@ -21,6 +21,8 @@ git clone https://github.com/MatheusSilva-Inf/Space-Connect-Global-Solution-2026
 cd Space-Connect-Global-Solution-2026
 python -m venv .venv
 .venv\Scripts\activate
+# Linux abaixo
+# source .venv/bin/activate
 python mission_control.py
 ```
 
