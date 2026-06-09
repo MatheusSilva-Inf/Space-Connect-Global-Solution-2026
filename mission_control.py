@@ -197,9 +197,10 @@ def menu_geracaoDados():
           print("║   2.  Gerar dados em seed              ║")
           print("║   3.  Definir dados manualmente        ║")
           print("║   4.  Visualizar dados atuais          ║")
+          print("║   5.  Mudar nome de equipe e missão    ║")
           print("║   0.  voltar                           ║")
           print("╚════════════════════════════════════════╝")
-          escolha = input("\nEscolha uma forma de gerar os dados da missão para o teste do aplicativo.(0-3): ").strip()
+          escolha = input("\nEscolha uma forma de gerar os dados da missão para o teste do aplicativo.(0-5): ").strip()
           match escolha:
             case "0":
               break
@@ -246,6 +247,18 @@ def menu_geracaoDados():
                   print(f"Bateria: {dados_missao[ciclos][2]}")
                   print(f"Oxigênio: {dados_missao[ciclos][3]}")
                   print(f"Estabilidade: {dados_missao[ciclos][4]}")
+            case "5":
+                global  missao_info
+                missao_info[0] = input("Digite o Nome da missão: ")
+                missao_info[1] = input("Digite o Nome da Equipe: ")
+                while True:
+                    if missao_info[0] == "":
+                        missao_info[0] = input("Nome da missão vazio, digite um nome para a missão: ")
+                        continue
+                    if missao_info[1] == "":
+                        missao_info[1] = input("Nome da equipe vazio, digite um nome para a equipe: ")
+                        continue
+                    break
             case _:
               print("Opção inválida! Digite 0, 1, 2 ou 3.")
 
@@ -471,15 +484,45 @@ def estabilidade_operacional(ciclo_analisado):
 
 def gerar_recomendacao(ciclo_analisado):
     estado_missao = sum(alertas[ciclo_analisado])
+    recomendacoes = []
 
     if estado_missao == 0:
-        return "Tudo operando de forma nominal. Manter o curso."
+        recomendacoes.append("GERAL: Tudo operando de forma nominal. Manter o curso.")
     elif estado_missao <= 2:
-        return "Monitorar variações de perto, mas sem necessidade de intervenção imediata."
+        recomendacoes.append("GERAL: Monitorar variações de perto, mas sem necessidade de intervenção imediata.")
     elif estado_missao <= 5:
-        return "Atenção necessária. Realizar diagnósticos nos sistemas com alertas ativos."
+        recomendacoes.append("GERAL: Atenção necessária. Realizar diagnósticos nos sistemas com alertas ativos.")
     else:
-        return "ALERTA! Abortar operação ou ativar protocolos de emergência imediatamente!"
+        recomendacoes.append("GERAL: ALERTA! Abortar operação ou ativar protocolos de emergência imediatamente!")
+
+    if alertas[ciclo_analisado][0] == 1:
+        if dados_missao[ciclo_analisado][0] < 18:
+            recomendacoes.append("- TEMPERATURA: Aumentar aquecimento dos trajes e painéis internos.")
+        else:
+            recomendacoes.append("- TEMPERATURA: Verificar controle térmico e acionar resfriamento primário.")
+    elif alertas[ciclo_analisado][0] == 2:
+         recomendacoes.append("- TEMPERATURA (CRÍTICO): Risco de superaquecimento! Evacuar área e acionar resfriamento de emergência.")
+
+    if alertas[ciclo_analisado][1] == 1:
+         recomendacoes.append("- COMUNICAÇÃO: Realizar calibração de antena e tentar isolar interferências de sinal.")
+    elif alertas[ciclo_analisado][1] == 2:
+         recomendacoes.append("- COMUNICAÇÃO (CRÍTICO): Conexão perdida! Ativar transmissores de backup e disparar sinalizador.")
+
+    if alertas[ciclo_analisado][2] == 1:
+         recomendacoes.append("- BATERIA: Desativar sistemas de suporte não essenciais para conservação de energia.")
+    elif alertas[ciclo_analisado][2] == 2:
+         recomendacoes.append("- BATERIA (CRÍTICO): Risco de apagão total! Acionar geradores de reserva imediatamente.")
+
+    if alertas[ciclo_analisado][3] == 1:
+         recomendacoes.append("- OXIGÊNIO: Inspecionar filtros de CO2 e recalibrar misturadores de gás.")
+    elif alertas[ciclo_analisado][3] == 2:
+         recomendacoes.append("- OXIGÊNIO (CRÍTICO): Falha no suporte de vida! Vestir trajes pressurizados e abrir cilindros O2 reserva.")
+
+    if alertas[ciclo_analisado][4] == 1:
+         recomendacoes.append("- ESTABILIDADE: Ajustar giroscópios e recalibrar propulsores de estabilização lateral.")
+    elif alertas[ciclo_analisado][4] == 2:
+         recomendacoes.append("- ESTABILIDADE (CRÍTICO): Risco estrutural iminente! Preparar para impacto ou abortar manobra.")
+    return "\n  ".join(recomendacoes)
 
 # =================================== RELATÓRIOS  ========================================================
 
@@ -494,7 +537,7 @@ def gerar_relatorio_ciclo(ciclo_analisado):
 
   print(f"\nPontuação de risco do ciclo: {sum(alertas[ciclo_analisado])}")
   print(f"Classificação do ciclo: {classificar_ciclo(ciclo_analisado)}")
-  print(f"Recomendação: {gerar_recomendacao(ciclo_analisado)}")
+  print(f"Recomendações:\n  {gerar_recomendacao(ciclo_analisado)}")
   if ciclo_analisado > 0:
       analisar_tendencia_por_ciclo(ciclo_analisado - 1, ciclo_analisado)
 

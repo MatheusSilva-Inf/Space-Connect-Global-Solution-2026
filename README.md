@@ -8,11 +8,14 @@
 
 ## O que é o projeto:
 
-O Mission Control App é um sistema de simulação e monitoramento em terminal desenvolvido em Python. Ele foi desenvolvido sobre o contexto de missões espaciais de longa duração, sendo elas divididas em 6 ciclos. e sendo analisadas por ciclo as áreas de "Temperatura interna", "Comunicação com a base", "Sistema de energia","Suporte de oxigênio","Estabilidade operacional".
+O Mission Control App é uma solução imaginada para facilitar a intuitividade e agilidade em tomadas de decisões durante missões espaciais de longa duração. Para o contexto do aplicativo é imaginado que essas missões possuem 6 ciclos e em cada um deles é analisado as áreas de "Temperatura interna", "Comunicação com a base", "Sistema de energia","Suporte de oxigênio","Estabilidade operacional" da nave, emitindo alertas e recomendações com base na gravidade do problema.
 
 ## Funcionalidades:
 
-A aplicação é capaz de gerar dados simulados de forma aleatória ou manual, gerar relatórios para cada ciclo, por área ou de forma geral e criar um histórico por sessão, permitindo visualizar, retomar os dados antigos de análise para os atuais ou apagar um histórico.
+- Geração dados simulados de forma aleatória ou manual, 
+- Geração de relatórios para cada ciclo, por área ou de forma geral
+- Geração de recomendações da missão ou para cada área analisada
+- Criação um histórico por sessão, permitindo visualizar, retomar os dados antigos de análise para os atuais ou apagar um histórico.
 
 ## Como executar:
 
@@ -32,5 +35,5 @@ python mission_control.py
 - Interface apenas via terminal
 - Foi testado com interpretador 3.10+ apenas
 
-# Vídeo de demonstração:
+# Vídeo de demonstração: https://youtu.be/_XN1DLWqsfQ
 
